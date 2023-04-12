@@ -1,0 +1,23 @@
+# sur quel port le serveur démarre
+server:
+  port: 8080
+
+# Les informations de connexion de la bd
+spring:
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/
+    driver-class-name: "org.postgresql.Driver"
+
+# propriétés custom
+vous:
+  pouvez:
+    utiliser:
+      - "ce"
+      - "que"
+      - "vous"
+    avez: 1
+    besoin: 2
+    dans: 3
+    lesProperties: "ici ça fonctionne"
