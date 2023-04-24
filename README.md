@@ -71,7 +71,7 @@ password: root
    ```
    en photo :
 
-    ![vision pgAdmin ajout serveur](doc/pictures/AddServerPgAdminInfo.png)
+    ![vision pgAdmin ajout serveur](doc/pictures/NewAddServerAdmin.png)
 
 # Compilation du projet
 
