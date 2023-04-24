@@ -6,7 +6,9 @@ import org.hibernate.Hibernate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Getter
@@ -16,11 +18,15 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionEntity {
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String label;
 
     @OneToMany
-    private Set<Reponse> reponses;
+    private Set<ReponseEntity> reponses;
+
 
 
     @Override
@@ -28,7 +34,7 @@ public class QuestionEntity {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         QuestionEntity that = (QuestionEntity) o;
-        return getLabel() != null && Objects.equals(getLabel(), that.getLabel());
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override

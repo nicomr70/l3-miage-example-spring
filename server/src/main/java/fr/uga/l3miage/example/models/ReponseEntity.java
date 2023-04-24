@@ -17,6 +17,10 @@ import java.util.Objects;
 @NoArgsConstructor
 public class ReponseEntity {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String label;
 
     private Boolean estValide;
@@ -27,7 +31,7 @@ public class ReponseEntity {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ReponseEntity that = (ReponseEntity) o;
-        return getLabel() != null && Objects.equals(getLabel(), that.getLabel());
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
