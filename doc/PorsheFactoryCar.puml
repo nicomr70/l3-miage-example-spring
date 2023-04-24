@@ -1,0 +1,93 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+enum Carburant{
+    ELECTRIC
+    SP98
+    SP95
+    DIESEL
+    E85
+}
+
+enum Model{
+    911GT3RS
+    914GT3RS
+    914GT
+    911GT
+    911CARRERA
+}
+
+enum Place{
+TWO
+FOUR
+FIVE
+SEVEN
+}
+
+enum TransmissionType{
+BVM
+BVA
+}
+
+
+class Car{
+UUID id
+String immat
+Places nbPlace
+}
+
+class Motor{
+UUID id
+String noSeries
+Float cylindré
+Float puissance
+Carburant carburant
+getHorsePower()
+}
+
+class Base{
+UUID id
+String noSeries
+Float longueur
+Float largeur
+Float Hauteur
+Places places
+}
+
+class Accessory{
+UUID id
+String referenceId
+String name
+String prix
+
+}
+
+class Transmission{
+UUID
+TransmissionType type
+Integer nbRapport
+}
+
+class CarBodyPart{
+UUID id
+String noSerie
+String Color
+}
+
+class BonDeCommande{
+Color color
+Places Places
+Carburant carburant
+Model Model
+TransmissionType type
+}
+
+
+Car "1"-"1" Transmission
+Car "1"-l-"1" Motor
+Car "1"--"1" Base
+Car "*"--"1" Accessory : APourAccessoires
+Car "*"--"1" CarBodyPart : APourPieceDeCarrosserie
+BonDeCommande --> Car : permet de lancer la fabrication\nd'une voiture
+
+@enduml
