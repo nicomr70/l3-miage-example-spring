@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-
+//kTest
 @Mapper(uses = MiahootMapperUtils.class)
 public interface MiahootMapper {
 
