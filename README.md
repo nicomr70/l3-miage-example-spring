@@ -35,7 +35,6 @@ Pensez à avoir :
 
 Pour installer la BD postgres, vous n'avez qu'à compiler le docker compose, mettez vous à la racine du projet et tapez la commande suivante : 
 ```shell
-docker-compose -f docker/docker-compose.yml up
 ```
 
 Cette commande va créer 2 containers, un `postgres` et `pgAdmin`
