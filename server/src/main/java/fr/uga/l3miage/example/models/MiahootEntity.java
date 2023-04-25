@@ -24,6 +24,8 @@ public class MiahootEntity {
     @GeneratedValue
     private Long id;
 
+    private Long userId;
+
 
     private String nom;
 

@@ -9,17 +9,16 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 //kTest
-@Mapper(uses = MiahootMapperUtils.class)
+@Mapper
 public interface MiahootMapper {
 
     Miahoot toDto(MiahootEntity miahootEntity);
 
-    @Mapping(target = "miahootInt", source = ".", qualifiedBy = MiahootMapperUtils.ToSumMiahootInt.class)
-    @Mapping(target = "miahootMapping", source = "fieldNotMappingAutomatically")
     MiahootEntity toEntity(CreateTestRequest request);
 
 
-    void mergeMiahootEntity(@MappingTarget @NonNull MiahootEntity baseEntity, Test test);
+    // pas sure qu'on en aie besoin
+    void mergeMiahootEntity(@MappingTarget @NonNull MiahootEntity baseEntity, Miahoot miahoot);
 
 
 }
