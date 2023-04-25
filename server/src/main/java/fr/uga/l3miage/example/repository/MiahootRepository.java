@@ -12,7 +12,9 @@ import java.util.Optional;
 @Repository
 public interface MiahootRepository extends JpaRepository<MiahootEntity,Long> {
 
-    Optional<List<MiahootEntity>>findByUserId(final long userId);
+    List<MiahootEntity> findAllByUserId(final long userId);
+
+    List<MiahootEntity> findAllByNom(final String nom);
 
     Optional<MiahootEntity> findByUserIdAndNom(final long userId, final String nom);
 

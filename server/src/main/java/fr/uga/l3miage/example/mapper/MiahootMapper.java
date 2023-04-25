@@ -16,7 +16,6 @@ public interface MiahootMapper {
 
     MiahootEntity toEntity(CreateTestRequest request);
 
-
     // pas sure qu'on en aie besoin
     void mergeMiahootEntity(@MappingTarget @NonNull MiahootEntity baseEntity, Miahoot miahoot);
 
