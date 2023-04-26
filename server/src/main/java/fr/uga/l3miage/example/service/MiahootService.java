@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,7 +34,11 @@ public class MiahootService{
 
     public List<Miahoot> getMiahoot(final Long userId) {
         try {
-            return miahootMapper.toDto(miahootComponent.getMiahoot(userId));
+            List<Miahoot> listMiahoot = new ArrayList();
+            for(MiahootEntity miahootEntity : miahootComponent.getMiahoot(userId)){
+                listMiahoot.add(miahootMapper.toDto(miahootEntity));
+            }
+            return listMiahoot;
         } catch (MiahootEntityNotFoundException ex) {
             throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()));
         }
@@ -42,7 +47,11 @@ public class MiahootService{
 
     public List<Miahoot> getMiahoot(final String nom) {
         try {
-            return miahootMapper.toDto(miahootComponent.getMiahoot(nom));
+            List<Miahoot> listMiahoot = new ArrayList();
+            for(MiahootEntity miahootEntity : miahootComponent.getMiahoot(nom)){
+                listMiahoot.add(miahootMapper.toDto(miahootEntity));
+            }
+            return listMiahoot;
         } catch (MiahootEntityNotFoundException ex) {
             throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()));
         }
@@ -50,7 +59,6 @@ public class MiahootService{
 
     public void createMiahoot(final CreateMiahootRequest createMiahootRequest) {
         MiahootEntity newMiahootEntity = miahootMapper.toEntity(createMiahootRequest);
-
             try {
                 miahootComponent.createMiahoot(newMiahootEntity);
             } catch (MiahootAlreadyExistException ex) {
@@ -59,17 +67,17 @@ public class MiahootService{
     }
 
     public void updateMiahoot(final Long userId, final String nom,final Miahoot miahoot) {
-        if (miahoot.getmiahootInt() != 0) {
+
             try {
                 miahootComponent.updateMiahoot(userId, nom, miahoot);
-            } catch (MiahootEntityNotFoundException ex) {
-                throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()),lastDescription,ex);
-            } catch (IsNotTestException ex) {
-                throw new IsNotTestRestException("Une erreur lors de la mise à jour de l'entité TestConfigWithProperties a été détectée.",null,ex);
-            } catch (DescriptionAlreadyExistException ex) {
-                throw new DescriptionAlreadyUseRestException(ERROR_DETECTED,test.getDescription(),ex);
+            } catch (MiahootAlreadyExistException ex) {
+                throw new MiahootAlreadyExistRestException(String.format("Le miahoot %s existe déjà en BD."));
+            } catch (MiahootUserIdNotSameException ex) {
+                throw new MiahootUserIdNotSameRestException("Le userId [%l] est différent du userId [%l] de l'entité Miahoot. Raison : [%s]", userId, miahoot.getUserId(),ex.getMessage());
+            } catch (MiahootEntityNotFoundException e) {
+                throw new RuntimeException(e);
             }
-        }else throw new TestIntIsZeroRestException("L'attribut testInt ne peut pas être égal à zéro");
+
     }
 
 
