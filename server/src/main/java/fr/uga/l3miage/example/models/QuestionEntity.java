@@ -21,7 +21,7 @@ public class QuestionEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long idQuestion;
 
     private String label;
 
@@ -33,7 +33,7 @@ public class QuestionEntity {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         QuestionEntity that = (QuestionEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return getIdQuestion() != null && Objects.equals(getIdQuestion(), that.getIdQuestion());
     }
 
     @Override

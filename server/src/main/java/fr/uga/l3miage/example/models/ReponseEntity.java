@@ -18,7 +18,7 @@ import java.util.Objects;
 public class ReponseEntity {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long idReponse;
 
     private String label;
 
@@ -29,7 +29,7 @@ public class ReponseEntity {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ReponseEntity that = (ReponseEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return getIdReponse() != null && Objects.equals(getIdReponse(), that.getIdReponse());
     }
 
     @Override

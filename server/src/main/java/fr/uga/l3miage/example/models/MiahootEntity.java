@@ -20,7 +20,7 @@ import java.util.Objects;
 public class MiahootEntity {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long idMiahoot;
 
     private String nom;
 
@@ -34,7 +34,7 @@ public class MiahootEntity {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         MiahootEntity that = (MiahootEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return getIdMiahoot() != null && Objects.equals(getIdMiahoot(), that.getIdMiahoot());
     }
 
     @Override
