@@ -19,7 +19,7 @@ public class MiahootComponent {
 
     public MiahootEntity getMiahoot(final long userId, final String nom) throws MiahootEntityNotFoundException {
         return miahootRepository.findByUserIdAndNom(userId, nom)
-                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le userId [%ld] et le nom [%s]", userId, nom)));
+                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le userId [%d] et le nom [%s]", userId, nom)));
     }
 
     public List<MiahootEntity> getMiahoot(final long userId) throws MiahootEntityNotFoundException {
@@ -27,7 +27,7 @@ public class MiahootComponent {
         if (l.size()>0)
             return l;
         else
-            throw new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le userId [%l]", userId));
+            throw new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvée pour le userId [%d]", userId));
     }
 
     public List<MiahootEntity> getMiahoot(final String nom) throws MiahootEntityNotFoundException {
@@ -44,7 +44,7 @@ public class MiahootComponent {
 //        userId is not present -> all good
 //        userId present and nom isnt -> all good
         if (miahootRepository.findByUserIdAndNom(entity.getUserId(), entity.getNom()).isPresent()){
-            throw new MiahootAlreadyExistException(String.format("L'entité Miahoot existe déjà pour le userId [%l] et le nom [%s]", entity.getUserId(), entity.getNom()));
+            throw new MiahootAlreadyExistException(String.format("L'entité Miahoot existe déjà pour le userId [%d] et le nom [%s]", entity.getUserId(), entity.getNom()));
         }
         miahootRepository.save(entity);
     }
@@ -55,13 +55,13 @@ public class MiahootComponent {
         // same userId diff nom -> check if new miahoot exists
 
         if (userId == miahoot.getUserId()){
-            throw new MiahootUserIdNotSameException(String.format("Le userId [%l] est différent du userId [%l] de l'entité Miahoot", userId, miahoot.getUserId()));
+            throw new MiahootUserIdNotSameException(String.format("Le userId [%d] est différent du userId [%d] de l'entité Miahoot", userId, miahoot.getUserId()));
         }
         if (!nom.equals(miahoot.getNom()) && !miahootRepository.findByUserIdAndNom(miahoot.getUserId(), miahoot.getNom()).isPresent()) {
             throw new MiahootAlreadyExistException(String.format("Le miahoot %s existe déjà en BD."));
         }
         MiahootEntity actualEntity = miahootRepository.findByUserIdAndNom(userId, nom)
-                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le userId [%l] et le nom [%s]", userId, nom)));
+                .orElseThrow(() -> new MiahootEntityNotFoundException(String.format("Aucune entité n'a été trouvé pour le userId [%d] et le nom [%s]", userId, nom)));
         miahootMapper.mergeMiahootEntity(actualEntity, miahoot);
         miahootRepository.save(actualEntity);
     }

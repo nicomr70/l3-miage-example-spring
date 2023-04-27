@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MiahootService{
 
-    private static final String ERROR_DETECTED = "Une erreur lors de la création de l'entité TestConfigWithProperties à été détecté.";
+    private static final String ERROR_DETECTED = "Une erreur lors de la création de l'entité MiahootConfigWithProperties à été détecté.";
     private final MiahootComponent miahootComponent;
     private final MiahootMapper miahootMapper;
 
@@ -32,13 +32,13 @@ public class MiahootService{
     }
 
 
-    public List<Miahoot> getMiahoot(final Long userId) {
+    public List<Miahoot> getMiahoot(final long userId) {
+        List<Miahoot> l = new ArrayList<>();
         try {
-            List<Miahoot> listMiahoot = new ArrayList();
-            for(MiahootEntity miahootEntity : miahootComponent.getMiahoot(userId)){
-                listMiahoot.add(miahootMapper.toDto(miahootEntity));
+            for (MiahootEntity m : miahootComponent.getMiahoot(userId)) {
+                l.add(miahootMapper.toDto(m));
             }
-            return listMiahoot;
+            return l;
         } catch (MiahootEntityNotFoundException ex) {
             throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()));
         }
@@ -46,12 +46,12 @@ public class MiahootService{
 
 
     public List<Miahoot> getMiahoot(final String nom) {
+        List<Miahoot> l = new ArrayList<>();
         try {
-            List<Miahoot> listMiahoot = new ArrayList();
-            for(MiahootEntity miahootEntity : miahootComponent.getMiahoot(nom)){
-                listMiahoot.add(miahootMapper.toDto(miahootEntity));
+            for (MiahootEntity m : miahootComponent.getMiahoot(nom)) {
+                l.add(miahootMapper.toDto(m));
             }
-            return listMiahoot;
+            return l;
         } catch (MiahootEntityNotFoundException ex) {
             throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()));
         }
@@ -62,22 +62,20 @@ public class MiahootService{
             try {
                 miahootComponent.createMiahoot(newMiahootEntity);
             } catch (MiahootAlreadyExistException ex) {
-                throw new MiahootAlreadyExistRestException(ERROR_DETECTED,createMiahootRequest,ex);
+                throw new MiahootAlreadyExistRestException(ERROR_DETECTED, ex);
             }
     }
 
-    public void updateMiahoot(final Long userId, final String nom,final Miahoot miahoot) {
-
+    public void updateMiahoot(final long userId, final String nom, final Miahoot miahoot) {
             try {
                 miahootComponent.updateMiahoot(userId, nom, miahoot);
+            } catch (MiahootEntityNotFoundException ex) {
+                throw new MiahootEntityNotFoundRestException(String.format("Impossible de charger l'entité. Raison : [%s]",ex.getMessage()));
             } catch (MiahootAlreadyExistException ex) {
-                throw new MiahootAlreadyExistRestException(String.format("Le miahoot %s existe déjà en BD."));
+                throw new MiahootAlreadyExistRestException(ERROR_DETECTED);
             } catch (MiahootUserIdNotSameException ex) {
-                throw new MiahootUserIdNotSameRestException("Le userId [%l] est différent du userId [%l] de l'entité Miahoot. Raison : [%s]", userId, miahoot.getUserId(),ex.getMessage());
-            } catch (MiahootEntityNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new MiahootUserIdNotSameRestException("Une erreur lors de la mise à jour de l'entité.",ex);
             }
-
     }
 
 
@@ -85,13 +83,28 @@ public class MiahootService{
     public void deleteMiahoot(final long userId, final String nom) {
         try {
             miahootComponent.deleteMiahoot(userId, nom);
-        } catch (MultipleEntityHaveSameDescriptionException | MiahootEntityNotFoundException ex) {
-            throw new TestEntityNotDeletedRestException(ex.getMessage());
+        } catch (MiahootEntityNotFoundException ex) {
+            throw new MiahootEntityNotFoundRestException(ex.getMessage());
         }
     }
 
+    @Transactional
+    public void deleteMiahoot(final long userId) {
+        try {
+            miahootComponent.deleteMiahoot(userId);
+        } catch (MiahootEntityNotFoundException ex) {
+            throw new MiahootEntityNotFoundRestException(ex.getMessage());
+        }
+    }
 
-
+    @Transactional
+    public void deleteMiahoot(final String nom) {
+        try {
+            miahootComponent.deleteMiahoot(nom);
+        } catch (MiahootEntityNotFoundException ex) {
+            throw new MiahootEntityNotFoundRestException(ex.getMessage());
+        }
+    }
 
 
 }

@@ -2,6 +2,8 @@ package fr.uga.l3miage.example.endpoint;
 
 
 import fr.uga.l3miage.example.annotations.Error400Custom;
+import fr.uga.l3miage.example.error.MiahootEntityNotDeletedErrorResponse;
+import fr.uga.l3miage.example.error.MiahootNotFoundErrorResponse;
 import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.response.Miahoot;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name = "Miahoot tag")
 @CrossOrigin
@@ -29,11 +32,11 @@ public interface MiahootEndpoint {
             content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("{userId, nom}")
-    Miahoot getEntityMiahoot(@PathVariable Long userId, String nom);
+    Miahoot getEntityMiahoot(@PathVariable long userId, @PathVariable String nom);
     @GetMapping("{nom}")
-    Miahoot getEntityMiahoot(@PathVariable String nom);
+    List<Miahoot> getEntityMiahoot(@PathVariable String nom);
     @GetMapping("{userId}")
-    Miahoot getEntityMiahoot(@PathVariable Long userId);
+    List<Miahoot> getEntityMiahoot(@PathVariable long userId);
 
 
     //POST
@@ -51,25 +54,24 @@ public interface MiahootEndpoint {
             content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PatchMapping("{nom}")
-    void updateTestEntity(@PathVariable final String nom, @RequestBody final Miahoot miahoot);
+    @PatchMapping("{userId, nom}")
+    void updateMiahootEntity(@PathVariable final long userId, @PathVariable final String nom, @RequestBody final Miahoot miahoot);
 
 
     //DELETE
-    @Operation(description = "Suppression d'une entité Test en bd")
+    @Operation(description = "Suppression d'une entité Miahoot en bd")
     @ApiResponse(responseCode = "200", description = "si isInError est à false alors 'Hello word' est renvoyé")
     @ApiResponse(responseCode = "418", description = "Renvoie une erreur 418 si l'entité n'a pu être supprimée",
             content = @Content(schema = @Schema(implementation = MiahootEntityNotDeletedErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{userId, nom}")
-    void deleteTestEntity(@PathVariable Long userId, String nom);
+    void deleteMiahootEntity(@PathVariable long userId, @PathVariable String nom);
+
     @DeleteMapping("{nom}")
-    void deleteTestEntity(@PathVariable String nom);
+    void deleteMiahootEntity(@PathVariable String nom);
+
     @DeleteMapping("{userId}")
-    void deleteTestEntity(@PathVariable Long userId);
-
-
-
+    void deleteMiahootEntity(@PathVariable long userId);
 
 
 }

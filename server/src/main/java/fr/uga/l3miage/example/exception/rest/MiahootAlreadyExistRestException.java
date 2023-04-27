@@ -21,6 +21,11 @@ public class MiahootAlreadyExistRestException extends Exception {
         this.request = request;
     }
 
+
+    public MiahootAlreadyExistRestException(String message,Throwable cause) {
+        super(message, cause);
+    }
+
     public HttpStatus getHttpStatus() {
         return HttpStatus.NOT_FOUND;
     }
