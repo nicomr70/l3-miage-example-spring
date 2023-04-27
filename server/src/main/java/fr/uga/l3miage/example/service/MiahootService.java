@@ -57,16 +57,16 @@ public class MiahootService{
         }
     }
 
-    public void createMiahoot(final CreateMiahootRequest createMiahootRequest) {
+    public void createMiahoot(final CreateMiahootRequest createMiahootRequest){
         MiahootEntity newMiahootEntity = miahootMapper.toEntity(createMiahootRequest);
             try {
                 miahootComponent.createMiahoot(newMiahootEntity);
             } catch (MiahootAlreadyExistException ex) {
-                throw new MiahootAlreadyExistRestException(ERROR_DETECTED, ex);
+               throw new MiahootAlreadyExistRestException(ERROR_DETECTED, ex);
             }
     }
 
-    public void updateMiahoot(final long userId, final String nom, final Miahoot miahoot) {
+    public void updateMiahoot(final long userId, final String nom, final Miahoot miahoot){
             try {
                 miahootComponent.updateMiahoot(userId, nom, miahoot);
             } catch (MiahootEntityNotFoundException ex) {

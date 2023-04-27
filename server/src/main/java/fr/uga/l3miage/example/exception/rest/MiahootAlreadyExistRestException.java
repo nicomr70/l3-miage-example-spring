@@ -5,24 +5,13 @@ import fr.uga.l3miage.example.request.CreateMiahootRequest;
 import fr.uga.l3miage.example.request.CreateTestRequest;
 import org.springframework.http.HttpStatus;
 
-public class MiahootAlreadyExistRestException extends Exception {
-    private final CreateMiahootRequest request;
+public class MiahootAlreadyExistRestException extends RuntimeException {
 
-    public MiahootAlreadyExistRestException(String message){super(message);};
-
-    public MiahootAlreadyExistRestException(String message, CreateMiahootRequest request) {
-
+    public MiahootAlreadyExistRestException(String message){
         super(message);
-        this.request = request;
-    }
+    };
 
-    public MiahootAlreadyExistRestException(String message, CreateMiahootRequest request, Throwable cause) {
-        super(message, cause);
-        this.request = request;
-    }
-
-
-    public MiahootAlreadyExistRestException(String message,Throwable cause) {
+    public MiahootAlreadyExistRestException(String message, Throwable cause) {
         super(message, cause);
     }
 
