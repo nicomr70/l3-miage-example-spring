@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
-@JsonTypeName(TestEntityNotDeletedErrorResponse.TYPE_NAME)
+@JsonTypeName(MiahootEntityNotDeletedErrorResponse.TYPE_NAME)
 @ToString(callSuper = true, exclude = "errorCodeSwaggerDocumentation")
 @EqualsAndHashCode(callSuper = true)
 public class MiahootEntityNotDeletedErrorResponse extends ErrorResponse {

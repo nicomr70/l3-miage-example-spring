@@ -31,10 +31,18 @@ public interface MiahootEndpoint {
     @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
             content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("{userId, nom}")
+    @GetMapping("{userId}/{nom}")
     Miahoot getEntityMiahoot(@PathVariable long userId, @PathVariable String nom);
+
+    @Operation(description = "Récupérer le DTO de l'entité miahoot qui a pour id celui passé en paramètre")
+    @ApiResponse(responseCode = "200", description = "Renvoie le DTO de l'entité test demandée",
+            content = @Content(schema = @Schema(implementation = Miahoot.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ApiResponse(responseCode = "404", description = "Renvoie une erreur 404 si l'entité n'est pas trouvée",
+            content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("{nom}")
     List<Miahoot> getEntityMiahoot(@PathVariable String nom);
+    
     @GetMapping("{userId}")
     List<Miahoot> getEntityMiahoot(@PathVariable long userId);
 
@@ -54,7 +62,7 @@ public interface MiahootEndpoint {
             content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @Error400Custom
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PatchMapping("{userId, nom}")
+    @PatchMapping("{userId}/{nom}")
     void updateMiahootEntity(@PathVariable final long userId, @PathVariable final String nom, @RequestBody final Miahoot miahoot);
 
 
@@ -62,9 +70,9 @@ public interface MiahootEndpoint {
     @Operation(description = "Suppression d'une entité Miahoot en bd")
     @ApiResponse(responseCode = "200", description = "si isInError est à false alors 'Hello word' est renvoyé")
     @ApiResponse(responseCode = "418", description = "Renvoie une erreur 418 si l'entité n'a pu être supprimée",
-            content = @Content(schema = @Schema(implementation = MiahootEntityNotDeletedErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
+            content = @Content(schema = @Schema(implementation = MiahootNotFoundErrorResponse.class),mediaType = MediaType.APPLICATION_JSON_VALUE))
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("{userId, nom}")
+    @DeleteMapping("{userId}/{nom}")
     void deleteMiahootEntity(@PathVariable long userId, @PathVariable String nom);
 
     @DeleteMapping("{nom}")
