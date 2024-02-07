@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+entity CarEntity <<car_porche>> {
+   * varchar(8) immat
+   --
+   # cylinder_capacity: Double
+   # weight: Integer
+   # weight_unity: varchar <<WeightUnity>>
+   # torque: Integer
+   # power: Integer
+   # power_type: Integer <<PowerType>>
+   # circulation_date : LocalDate
+}
+
+enum PowerType {
+CH
+CHF
+}
+
+enum WeightRange {
+    KG,
+    POUND,
+    LIVRE
+}
+
+@enduml
